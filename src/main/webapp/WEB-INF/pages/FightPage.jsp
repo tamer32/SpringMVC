@@ -4,8 +4,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <tf:layout>
+
 	<h1>Prepare to fight!</h1>
 	<div class="row">
 		<div id="encounterDiv" style="width: 242">
@@ -80,7 +80,7 @@
 			$
 					.ajax({
 						type : "GET",
-						url : "rollTheDice",
+						url :  "${pageContext.request.contextPath}" + "/rollTheDice",
 						success : function(response) {
 							document.getElementById("diceDiv").style.visibility = "visible";
 							document.getElementById("gracefulDice").innerHTML = "Graceful Dice: "
@@ -112,15 +112,15 @@
 		}
 		function redirectToCharacterScreen() {
 			var Http = new XMLHttpRequest();
-			Http.open("GET", "/CRUDAppTheSecound/userInfo");
+			Http.open("GET", "${pageContext.request.contextPath}" + "/userInfo/" + location.href.substring(location.href.lastIndexOf('/') + 1));
 			Http.send();
-			window.location.replace("/CRUDAppTheSecound/userInfo");
+			window.location.replace("${pageContext.request.contextPath}" +"/userInfo/" + location.href.substring(location.href.lastIndexOf('/') + 1));
 		}
 		function newEncounter() {
 			$
 					.ajax({
 						type : "GET",
-						url : "newEncounter",
+						url : "${pageContext.request.contextPath}" + "/newEncounter",
 						success : function(response) {
 							document.getElementById("monsterName").innerHTML = response.name;
 							document.getElementById("monsterStats0").innerHTML = response.stats.Strenght;

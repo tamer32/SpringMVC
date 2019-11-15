@@ -10,16 +10,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import com.third.iter.entities.heroes.PlayerInfo;
 import com.third.iter.entities.monsters.MonsterInfo;
 import com.third.iter.services.UserManagmentService;
 
 @Controller
-@SessionAttributes({"monster", "playerInfo"})
+// @SessionAttributes({"monster", "playerInfo"})
 public class UserController {
 
   @Autowired UserManagmentService userManagmentService;
@@ -56,7 +56,7 @@ public class UserController {
     userManagmentService.createUser(player);
     theModel.addAttribute("playerInfo", player);
 
-    return "redirect:/userInfo";
+    return "redirect:/userInfo/" + player.getId();
   }
 
   @GetMapping("/loginPage")
@@ -70,9 +70,10 @@ public class UserController {
     return "index";
   }
 
-  @GetMapping("/userInfo")
-  public String userPanel(Model theModel, @ModelAttribute("playerInfo") PlayerInfo player) {
-    theModel.addAttribute("playerInfo", player);
+  @GetMapping("/userInfo/{player}")
+  public String userPanel(Model theModel, @PathVariable long player) {
+
+    theModel.addAttribute("playerInfo", userManagmentService.getPlayer(player));
     return "CharacterPage";
   }
 
@@ -83,12 +84,13 @@ public class UserController {
     return "index";
   }
 
-  @GetMapping("/fightPage")
-  public String fightMethod(Model theModel) throws ServletException, IOException {
+  @GetMapping("/fightPage/{user}")
+  public String fightMethod(Model model, @PathVariable long user)
+      throws ServletException, IOException {
     Random rand = new Random();
     int encounter = rand.nextInt(49) + 1;
-
-    userManagmentService.checkMonsterEncounter(encounter, theModel);
+    model.addAttribute("playerInfo", userManagmentService.getPlayer(user));
+    userManagmentService.checkMonsterEncounter(encounter, model);
 
     return "FightPage";
   }

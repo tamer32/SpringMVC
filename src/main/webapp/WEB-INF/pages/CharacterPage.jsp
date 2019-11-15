@@ -27,7 +27,7 @@
 					varStatus="status">
 					<td>${playerStats.value}</td>
 				</c:forEach>
-				<form:form action="fightPage" modelAttribute="playerInfo"
+				<form:form action="${pageContext.request.contextPath}/fightPage/${playerInfo.id}" modelAttribute="playerInfo" 
 					method="GET">
 					<td><input type="submit" value="Let's Fight!"
 						class="btn btn-light"></td>

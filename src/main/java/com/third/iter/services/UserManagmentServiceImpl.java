@@ -169,4 +169,16 @@ public class UserManagmentServiceImpl implements UserManagmentService {
     users.set(0, player);
     theModel.addAttribute("playerInfo", player);
   }
+
+  @Override
+  public PlayerInfo getPlayer(long playerId) {
+    return users
+        .stream()
+        .filter(
+            user -> {
+              return user.getId() == playerId;
+            })
+        .findFirst()
+        .orElse(new PlayerInfo());
+  }
 }

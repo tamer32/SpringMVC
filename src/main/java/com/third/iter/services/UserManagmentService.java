@@ -18,6 +18,8 @@ public interface UserManagmentService {
 
   public void setPlayerClassAndStats(PlayerInfo player);
 
+  public PlayerInfo getPlayer(long playerId);
+
   public void modifyName(PlayerInfo player, Model theModel);
 
   public ResponseEntity<Map<String, String>> battleCalculator();

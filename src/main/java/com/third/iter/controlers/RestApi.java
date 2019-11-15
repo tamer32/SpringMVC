@@ -19,7 +19,7 @@ import com.third.iter.services.UserManagmentService;
 
 @RestController
 @RequestMapping
-public class RestControl {
+public class RestApi {
   @Autowired UserManagmentService userManagmentService;
 
   @GetMapping(value = "/rollTheDice", produces = MediaType.APPLICATION_JSON_VALUE)
